@@ -1,0 +1,66 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./main.css" />
+    <title>Alarm Clock</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="clock-container">
+        <div class="clock-digital">
+          <div class="date"></div>
+          <div class="time"></div>
+          <div class="day"></div>
+        </div>
+        <div class="clock-analog">
+          <div class="spear"></div>
+          <div class="hour"></div>
+          <div class="minute"></div>
+          <div class="second"></div>
+          <div class="dail"></div>
+        </div>
+      </div>
+      <div id="alarm-container">
+        <!-- (B) SET ALARM -->
+        <div id="tpick">
+          <h1 class="header">SET ALARM</h1>
+          <div>
+            <h3 style="margin: 0; padding: 0">Millitary Time</h3>
+            <p style="margin: 0; padding: 0; font-style: italic">hh/mm/ss</p>
+          </div>
+
+          <div id="tpick-h"></div>
+          <div id="tpick-m"></div>
+          <div id="tpick-s"></div>
+          <div>
+            <input type="button" value="Set" id="tset" />
+            <input type="button" value="Reset" id="treset" disabled />
+          </div>
+        </div>
+
+        <div id="timers" style="width: 100%"></div>
+
+        <!-- (C) ALARM SOUND -->
+        <audio id="alarm-sound" loop>
+          <source
+            src="http://commondatastorage.googleapis.com/codeskulptor-assets/Evillaugh.ogg"
+            type="audio/mp3"
+          />
+        </audio>
+      </div>
+    </div>
+    <!-- <footer>By: Seymur Mammadov</footer> -->
+    <script src="./clock.js"></script>
+    <script src="./alarm.js"></script>
+  </body>
+</html>
