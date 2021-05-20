@@ -6,16 +6,19 @@ var ac = {
     // (A1) CREATE TIME PICKER - HR, MIN, SEC
     ac.thr = ac.createSel(23);
     document.getElementById("tpick-h").appendChild(ac.thr);
+
     ac.thm = ac.createSel(59);
     document.getElementById("tpick-m").appendChild(ac.thm);
     ac.ths = ac.createSel(59);
     document.getElementById("tpick-s").appendChild(ac.ths);
+    ac.snoozeButton = document.getElementById("tresnooze");
 
     // (A2) CREATE TIME PICKER - SET, RESET
     ac.tset = document.getElementById("tset");
     ac.tset.addEventListener("click", ac.set);
     ac.treset = document.getElementById("treset");
     ac.treset.addEventListener("click", ac.reset);
+    ac.snoozeButton.addEventListener("click", ac.snooze);
 
     // (A3) GET ALARM SOUND
     ac.sound = document.getElementById("alarm-sound");
@@ -29,12 +32,12 @@ var ac = {
         var hr = ac.padzero(now.getHours());
         var min = ac.padzero(now.getMinutes());
         var sec = ac.padzero(now.getSeconds());
-        console.log(hr + min + sec);
-        console.log(ac.alarm);
         // (D3) CHECK AND SOUND ALARM
         if (ac.alarm != null) {
-          now = hr + min + sec;
-          if (now == ac.alarm) {
+          now = hr + ":" + min + ":" + sec;
+          now = ac.hmsToSecondsOnly(now);
+          if (now.getTime() == ac.alarm.getTime()) {
+            console.log("WORKS");
             if (ac.sound.paused) {
               ac.sound.play();
             }
@@ -75,7 +78,10 @@ var ac = {
 
   // (E) SET ALARM
   set: function () {
-    ac.alarm = ac.thr.value + ac.thm.value + ac.ths.value;
+    // we get the time from drop down as string
+
+    ac.alarm = ac.thr.value + ":" + ac.thm.value + ":" + ac.ths.value;
+    ac.alarm = ac.hmsToSecondsOnly(ac.alarm);
     ac.displayAlarm = `${ac.thr.value}/${ac.thm.value}/${ac.ths.value}`;
     ac.thr.disabled = true;
     ac.thm.disabled = true;
@@ -111,6 +117,23 @@ var ac = {
     let timeContainer = document.getElementById("timers");
     ac.removeChildren(timeContainer);
   },
+
+  hmsToSecondsOnly: function (time) {
+    time = time.split(":");
+    let now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...time);
+  },
+
+  snooze: function () {
+    if (ac.alarm) {
+      let new_time = new Date(ac.alarm.getTime() + 5 * 60000);
+      console.log(`adding 5 minutes `);
+      console.log(`New time after snooze`);
+      console.log(`${new_time}`);
+      ac.alarm = new_time;
+    }
+  },
+
   removeChildren: function (parent) {
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
